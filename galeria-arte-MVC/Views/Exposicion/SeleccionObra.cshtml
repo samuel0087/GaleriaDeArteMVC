@@ -1,0 +1,124 @@
+﻿<style>
+    body {
+        background: #f6f6f6;
+    }
+
+    .obra-card {
+        display: block;
+        cursor: pointer;
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 5px 18px rgba(0,0,0,.08);
+        transition: .3s;
+        position: relative;
+        height: 100%;
+    }
+
+        .obra-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.15);
+        }
+
+        .obra-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+    .obra-info {
+        padding: 20px;
+    }
+
+        .obra-info h5 {
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .obra-info small {
+            color: #777;
+        }
+
+    .obra-check {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 24px;
+        height: 24px;
+        z-index: 2;
+    }
+
+        .obra-check:checked {
+            accent-color: black;
+        }
+
+    .obra-card:has(.obra-check:checked) {
+        border: 3px solid black;
+        transform: translateY(-6px);
+    }
+</style>
+
+@model List<Obra>
+
+@{
+    ViewData["Title"] = "Seleccionar Obras";
+}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="display-5 fw-light">
+            Seleccionar Obras
+        </h1>
+
+        <p class="text-muted">
+            Elige las obras que formarán parte de la exposición.
+        </p>
+
+    </div>
+
+    <form asp-action="SeleccionObra" method="post">
+
+        <div class="row g-4">
+
+            @foreach (var obra in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <input type="hidden" name="expoId" value="@ViewBag.ExposicionId" />
+
+                    <label class="obra-card h-100">
+
+                        <input type="checkbox"
+                               name="obraIds"
+                               value="@obra.Id"
+                        @(ViewBag.ObrasIncluidas.Contains(obra.Id) ? "checked" : "")
+                               class="obra-check">
+
+                        <img src="@obra.UrlImagen"
+                             alt="@obra.Titulo">
+
+                        <div class="obra-info">
+
+                            <h5>@obra.Titulo</h5>
+
+                        </div>
+
+                    </label>
+
+                </div>
+            }
+
+        </div>
+
+        <div class="text-center mt-5">
+
+            <button class="btn btn-dark btn-lg px-5">
+                Guardar Selección
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

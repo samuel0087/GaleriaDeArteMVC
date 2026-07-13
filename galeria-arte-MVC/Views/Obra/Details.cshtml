@@ -1,0 +1,73 @@
+﻿
+
+<style>
+	body {
+		background: #f7f7f7;
+	}
+
+	img {
+		object-fit: cover;
+	}
+
+	.display-5 {
+		letter-spacing: 1px;
+	}
+
+	p {
+		line-height: 1.8;
+	}
+</style>
+
+@Model galeria_arte_MVC.Models.Obra
+
+@{
+    ViewData["Title"] = Model.Titulo;
+}
+
+<div class="container py-5">
+
+    <div class="row g-5">
+
+        <div class="col-lg-7">
+            <img src="@Model.UrlImagen"
+                 alt="@Model.Titulo"
+                 class="img-fluid rounded shadow-lg w-100" />
+        </div>
+
+        <div class="col-lg-5 d-flex align-items-center">
+
+            <div>
+
+                <span class="badge bg-dark mb-3">
+                    Obra Finalizada
+                </span>
+
+                <h1 class="display-5 fw-light">
+                    @Model.Titulo
+                </h1>
+
+                <hr />
+
+                <p class="text-muted">
+                    <strong>Estilo</strong><br />
+                    @Model.Estilo
+                </p>
+
+
+                <p class="text-muted">
+                    <strong>Artista</strong><br />
+                    @Model.Artista.Nombre
+                </p>
+
+                <a asp-action="Index" asp-controller="Home" class="btn btn-outline-dark mt-3">
+                    ← Volver a la galería
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
