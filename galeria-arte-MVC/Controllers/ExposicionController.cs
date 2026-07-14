@@ -182,6 +182,10 @@ public class ExposicionController : Controller
 
         foreach (var id in obraIds)
         {
+
+            if (expo.ObrasExpuestas.Exists(o => o.Id == id))
+                continue;
+
             var obra = new Obra {Id = id};
             _context.Attach(obra);
 
@@ -194,5 +198,21 @@ public class ExposicionController : Controller
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> QuitarObra(int idExpo, Guid idObra)
+    {
+        var expo = await _context.Exposiciones
+            .Where(e => e.Id == idExpo)
+            .Include(e => e.ObrasExpuestas)
+            .FirstOrDefaultAsync();
+
+        if (expo == null || expo.ObrasExpuestas == null) return NotFound();
+
+        var obra = expo.ObrasExpuestas.FirstOrDefault( o => o.Id == idObra);
+        expo.ObrasExpuestas.Remove(obra);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Details", new { id = idExpo });
     }
 }

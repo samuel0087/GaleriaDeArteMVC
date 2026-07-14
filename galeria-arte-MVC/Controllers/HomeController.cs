@@ -19,8 +19,16 @@ namespace galeria_arte_MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var obras = await _context.Obras.ToListAsync();
-            return View(obras);
+            var obras = await _context.Obras
+                .Take(6)
+                .Include(o => o.Artista)
+                .ToListAsync();
+
+            var exposiciones = await _context.Exposiciones.ToListAsync();
+
+            var HomeView = new HomeViewModel { Exposiciones = exposiciones, Obras = obras };
+
+            return View(HomeView);
         }
 
         public IActionResult Privacy()

@@ -4,6 +4,56 @@
     ViewData["Title"] = Model.Nombre;
 }
 
+<style>
+    .obra-card {
+        position: relative;
+        overflow: hidden;
+        transition: .3s;
+    }
+
+    .btn-delete {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 50%;
+        background: #dc3545;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        opacity: 0;
+        transition: .25s;
+        z-index: 10;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 22px;
+    }
+
+        .btn-delete:hover {
+            background: #bb2d3b;
+            transform: scale(1.12);
+            box-shadow: 0 0 18px rgba(220,53,69,.45);
+            opacity: 1;
+        }
+
+        .btn-delete:active {
+            transform: scale(.95);
+        }
+
+        .obra-card:hover .btn-delete {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+    .obra-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+
 <div class="container py-5">
 
     <div class="card shadow border-0">
@@ -107,7 +157,11 @@
             {
                 <div class="col-lg-3 col-md-4 col-sm-6">
 
-                    <div class="card h-100 shadow-sm border-0">
+                    <div class="card obra-card h-100 shadow-sm border-0">
+
+                        <a class="btn-delete" asp-action="QuitarObra" asp-controller="Exposicion" asp-route-idExpo="@Model.Id" asp-route-idObra="@obra.Id">
+                            X
+                        </a>
 
                         <img src="@obra.UrlImagen"
                              class="card-img-top"
