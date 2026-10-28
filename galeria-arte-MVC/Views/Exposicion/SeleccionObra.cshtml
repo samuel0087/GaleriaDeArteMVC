@@ -84,19 +84,21 @@
 
             @foreach (var obra in Model)
             {
+                if (!ViewBag.ObrasIncluidas.Contains(obra.Id))
+                {
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <input type="hidden" name="expoId" value="@ViewBag.ExposicionId" />
 
                     <label class="obra-card h-100">
 
                         <input type="checkbox"
-                               name="obraIds"
-                               value="@obra.Id"
-                        @(ViewBag.ObrasIncluidas.Contains(obra.Id) ? "checked" : "")
-                               class="obra-check">
+                                name="obraIds"
+                                value="@obra.Id"
+                        @* @(ViewBag.ObrasIncluidas.Contains(obra.Id) ? "checked" : "") *@
+                                class="obra-check">
 
                         <img src="@obra.UrlImagen"
-                             alt="@obra.Titulo">
+                                alt="@obra.Titulo">
 
                         <div class="obra-info">
 
@@ -107,6 +109,8 @@
                     </label>
 
                 </div>
+                }
+                    
             }
 
         </div>

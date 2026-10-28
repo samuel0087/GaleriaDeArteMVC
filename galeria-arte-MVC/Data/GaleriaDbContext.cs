@@ -1,9 +1,10 @@
 ﻿using galeria_arte_MVC.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace galeria_arte_MVC.Data
 {
-    public class GaleriaDbContext : DbContext
+    public class GaleriaDbContext : IdentityDbContext
     {
         public GaleriaDbContext(DbContextOptions options) : base(options)
         { }
@@ -14,6 +15,10 @@ namespace galeria_arte_MVC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            // Primero, configuración interna de Identity
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Obra>()
                 .HasMany(x => x.ExposicionesObra)
                 .WithMany(x => x.ObrasExpuestas)
