@@ -1,13 +1,26 @@
 using galeria_arte_mvc.Data;
 using galeria_arte_MVC.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using galeria-arte-MVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AuthorizeFilter(
+        new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()
+    ));
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<GaleriaDbContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("GaleriaConnection")));
+
+
+
 
 builder.Services
     .AddDefaultIdentity<IdentityUser>(options =>

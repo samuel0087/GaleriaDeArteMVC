@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using galeria_arte_MVC.Data;
 using galeria_arte_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ namespace galeria_arte_MVC.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var obras = await _context.Obras
